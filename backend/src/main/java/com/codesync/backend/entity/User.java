@@ -1,5 +1,8 @@
 package com.codesync.backend.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,4 +30,16 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    public User(String username,String email,String password){
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="user_roles",
+                joinColumns = @JoinColumn(name="user_id"),
+                inverseJoinColumns = @JoinColumn(name="role_id"))
+    public Set<Role> roles = new HashSet<>();
+    
 }
