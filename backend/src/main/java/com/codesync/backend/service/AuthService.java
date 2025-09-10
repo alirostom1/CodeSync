@@ -2,6 +2,7 @@ package com.codesync.backend.service;
 
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Service;
 import com.codesync.backend.model.dto.LoginRequestDto;
 import com.codesync.backend.model.dto.RegistrationRequestDto;
 import com.codesync.backend.model.dto.UserResponseDto;
+import com.codesync.backend.model.entity.Role;
 import com.codesync.backend.model.entity.User;
+import com.codesync.backend.model.enums.ERole;
 import com.codesync.backend.model.mapper.UserMapper;
 import com.codesync.backend.repository.RoleRepository;
 import com.codesync.backend.repository.UserRepository;
@@ -44,6 +47,21 @@ public class AuthService {
         }
         User user = usermapper.toEntity(dto);
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
+
+        
+        ERole erole = ERole.valueOf(dto.getRole());
+        Role role = roleRepository.findByName(erole)
+                    .orElseGet(() -> {
+                        Role newRole = new Role();
+                        newRole.setName(erole);
+                        return roleRepository.save(newRole);
+                    });
+        if(user.getRoles() == null){
+            user.setRoles(new HashSet<>());
+        }
+        user.getRoles().add(role);
+
+
         User savedUser = userRepository.save(user);
         return usermapper.toDto(savedUser);
     }

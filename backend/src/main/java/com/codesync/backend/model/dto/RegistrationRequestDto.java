@@ -1,7 +1,11 @@
 package com.codesync.backend.model.dto;
 
+import com.codesync.backend.model.entity.Role;
+import com.codesync.backend.model.enums.ERole;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +25,10 @@ public class RegistrationRequestDto {
     @NotNull(message = "Password is required!")
     @Size(min = 8, message = "Password must be greater than 8 characters!")
     private String password;
+
+    @NotNull(message = "Role is required!")
+    @Pattern(regexp = "ROLE_USER|ROLE_INTERVIEWER", 
+             message = "Role must be ROLE_USER or ROLE_INTERVIEWER !")
+    private String role;
 
 }

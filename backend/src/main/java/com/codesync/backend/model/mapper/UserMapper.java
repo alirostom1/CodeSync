@@ -1,5 +1,9 @@
 package com.codesync.backend.model.mapper;
 
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 
 import com.codesync.backend.model.dto.RegistrationRequestDto;
@@ -21,6 +25,12 @@ public class UserMapper {
         dto.setEmail(user.getEmail());
         dto.setCreatedAt(user.getCreatedAt());
         dto.setUpdatedAt(user.getUpdatedAt());
+        if(user.getRoles() != null){
+            Set<String> roleNames = user.getRoles().stream()
+                        .map(role -> role.getName().name())
+                        .collect(Collectors.toSet());
+            dto.setRoles(roleNames);
+        } 
         return dto;
     }
 }

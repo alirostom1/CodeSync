@@ -1,6 +1,9 @@
 package com.codesync.backend.model.dto;
 
 import java.time.LocalDateTime;
+import java.util.Set;
+
+import com.codesync.backend.model.entity.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +19,8 @@ public class UserResponseDto {
     private Long id;
     private String username;
     private String email;
+    private Set<String> roles;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    
 }
