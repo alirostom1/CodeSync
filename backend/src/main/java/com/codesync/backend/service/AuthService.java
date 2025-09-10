@@ -1,10 +1,8 @@
 package com.codesync.backend.service;
 
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +26,6 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final UserMapper usermapper;
     
-    @Autowired
     public AuthService(UserRepository userRepository,RoleRepository roleRepository,
                         PasswordEncoder passwordEncoder,
                         UserMapper userMapper){
@@ -48,7 +45,7 @@ public class AuthService {
         User user = usermapper.toEntity(dto);
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
 
-        
+
         ERole erole = ERole.valueOf(dto.getRole());
         Role role = roleRepository.findByName(erole)
                     .orElseGet(() -> {

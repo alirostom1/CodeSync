@@ -1,7 +1,5 @@
 package com.codesync.backend.model.dto;
 
-import com.codesync.backend.model.entity.Role;
-import com.codesync.backend.model.enums.ERole;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
